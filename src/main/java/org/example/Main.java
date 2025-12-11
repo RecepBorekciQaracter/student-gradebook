@@ -36,22 +36,17 @@ public class Main {
                     sc.nextLine();
                     System.out.println("Introduce initial comment: ");
                     String comment = sc.nextLine();
-
                     studentList.add(new Student(name, grade, comment));
 
-                    //TEST
-                    for(int i = 0; i< studentList.size();i++) {
-                        System.out.println(studentList.get(i).toString());
-                    }
-
+                    System.out.println("Student has been added successfully!");
                     break;
                 case 2:
                     // View Students
-                    // viewStudents();
+                    viewStudents(studentList);
                     break;
                 case 3:
                     // Delete Student
-                    // deleteStudent();
+                    deleteStudent(sc, studentList);
                     break;
                 case 4:
                     // Get Highest Note
@@ -87,6 +82,28 @@ public class Main {
                 System.out.println("Please enter a valid number.");
                 sc.nextLine(); // discard bad input
             }
+        }
+    }
+
+    public static void viewStudents(ArrayList<Student>  studentList) {
+        // Print the student Information
+
+        System.out.println("---All Student Information---");
+        for(int i = 0; i< studentList.size();i++) {
+            System.out.println(studentList.get(i).toString());
+            System.out.println();
+        }
+    }
+    public static void deleteStudent(Scanner sc, ArrayList<Student> studentList) {
+        System.out.println("Enter Student Name to Delete: ");
+        String name = sc.nextLine();
+
+        boolean removed = studentList.removeIf(student -> student.name.equalsIgnoreCase(name));
+
+        if (removed) {
+            System.out.println("Student \"" + name + "\" has been deleted.");
+        } else {
+            System.out.println("No student found with that name.");
         }
     }
 }
