@@ -29,7 +29,7 @@ public class Main {
 
             switch (choice) {
                 case 1: // Do WHILE to ask information
-                    getStudent(sc, studentList);
+                    addStudent(sc, studentList);
                     break;
                 case 2:
                     // View Students
@@ -79,7 +79,7 @@ public class Main {
         }
     }
 
-    public static void getStudent(Scanner sc, ArrayList<Student> studentList) {
+    public static void addStudent(Scanner sc, ArrayList<Student> studentList) {
         System.out.println("Introduce student name: ");
         String name = sc.nextLine();
         System.out.println("Introduce student grade (X.X): ");
