@@ -1,11 +1,17 @@
 package org.example;
 
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+
+
 public class Main {
-    public static void main() {
+    private static int LIST_SIZE = 30;
+
+    public static void main(String args[]) {
         Scanner sc = new Scanner(System.in);
+        ArrayList<Student> studentList = new ArrayList<Student>(LIST_SIZE);
 
         while (true) {
             System.out.println("Welcome to the Student Gradebook app! Please select an option: ");
@@ -22,9 +28,22 @@ public class Main {
             int choice = readInt(sc, "\nPlease enter your choice: ");
 
             switch (choice) {
-                case 1:
-                    // Add Student
-                    // addStudent();
+                case 1: // Do WHILE to ask information
+                    System.out.println("Introduce student name: ");
+                    String name = sc.nextLine();
+                    System.out.println("Introduce student grade (X.X): ");
+                    double grade = sc.nextDouble();
+                    sc.nextLine();
+                    System.out.println("Introduce initial comment: ");
+                    String comment = sc.nextLine();
+
+                    studentList.add(new Student(name, grade, comment));
+
+                    //TEST
+                    for(int i = 0; i< studentList.size();i++) {
+                        System.out.println(studentList.get(i).toString());
+                    }
+
                     break;
                 case 2:
                     // View Students
