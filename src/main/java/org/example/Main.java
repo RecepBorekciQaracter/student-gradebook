@@ -11,7 +11,7 @@ public class Main {
         ArrayList<Student> studentList = new ArrayList<Student>(LIST_SIZE);
 
         ArrayList<Student> supportList = new ArrayList<Student>(LIST_SIZE);
-        Student buffer;
+        Student buffer = null;
         
         while (true) {
             System.out.println("Welcome to the Student Gradebook app! Please select an option: ");
@@ -29,16 +29,7 @@ public class Main {
 
             switch (choice) {
                 case 1: // Do WHILE to ask information
-                    System.out.println("Introduce student name: ");
-                    String name = sc.nextLine();
-                    System.out.println("Introduce student grade (X.X): ");
-                    double grade = sc.nextDouble();
-                    sc.nextLine();
-                    System.out.println("Introduce initial comment: ");
-                    String comment = sc.nextLine();
-                    studentList.add(new Student(name, grade, comment));
-
-                    System.out.println("Student has been added successfully!");
+                    getStudent(sc, studentList);
                     break;
                 case 2:
                     // View Students
@@ -49,61 +40,16 @@ public class Main {
                     deleteStudent(sc, studentList);
                     break;
                 case 4:
-                    double HG = 0;
-
-                    for(int i = 0; i< studentList.size();i++) {
-                        buffer = studentList.get(i);
-                        if(buffer.grade > HG) {
-                            HG = buffer.grade;
-                            supportList.clear();
-                            supportList.add(studentList.get(i));
-                        } else if (buffer.grade == HG) {
-                            supportList.add(studentList.get(i));
-                        }
-                    }
-
-                    System.out.println("The Highest grade is a : " + HG);
-                    System.out.println("By the students:");
-
-                    for(int i = 0; i< supportList.size();i++) {
-                        System.out.println(supportList.get(i).name);
-                    }
-
+                    // Display the highest note. And get the students with the highest note.
+                    getHighestNote(sc, studentList, supportList, buffer);
                     break;
                 case 5:
-                    double LG = 0;
-
-                    for(int i = 0; i< studentList.size();i++) {
-                        buffer = studentList.get(i);
-                        if(buffer.grade < LG) {
-                            LG = buffer.grade;
-                            supportList.clear();
-                            supportList.add(studentList.get(i));
-                        } else if (buffer.grade == LG) {
-                            supportList.add(studentList.get(i));
-                        }
-                    }
-
-                    System.out.println("The Lowest grade is a : " + LG);
-                    System.out.println("By the students:");
-
-                    for(int i = 0; i< supportList.size();i++) {
-                        System.out.println(supportList.get(i).name);
-                    }
-
+                    // Display the lowest note. And get the students with the lowest note.
+                    getLowestNote(sc, studentList, supportList, buffer);
                     break;
                 case 6:
                     // Get class average
-                    double average = 0;
-
-                    for(int i = 0; i <  studentList.size(); i++) {
-                        average = average + studentList.get(i).grade;
-                    }
-
-                    average = average / studentList.size();
-                    System.out.print("Average class grade: ");
-                    System.out.println(average);
-
+                    getClassAverage(sc, studentList);
                     break;
                 case 7:
                     // Get Report (Print highest note, lowest note, and average of the class using string builder)
@@ -133,6 +79,19 @@ public class Main {
         }
     }
 
+    public static void getStudent(Scanner sc, ArrayList<Student> studentList) {
+        System.out.println("Introduce student name: ");
+        String name = sc.nextLine();
+        System.out.println("Introduce student grade (X.X): ");
+        double grade = sc.nextDouble();
+        sc.nextLine();
+        System.out.println("Introduce initial comment: ");
+        String comment = sc.nextLine();
+        studentList.add(new Student(name, grade, comment));
+
+        System.out.println("Student has been added successfully!");
+    }
+
     public static void viewStudents(ArrayList<Student>  studentList) {
         // Print the student Information
 
@@ -154,4 +113,63 @@ public class Main {
             System.out.println("No student found with that name.");
         }
     }
+
+    public static void getHighestNote(Scanner sc, ArrayList<Student> studentList, ArrayList<Student> supportList, Student buffer) {
+        double HG = 0;
+        supportList.clear();
+
+        for(int i = 0; i< studentList.size();i++) {
+            buffer = studentList.get(i);
+            if(buffer.grade > HG) {
+                HG = buffer.grade;
+                supportList.clear();
+                supportList.add(buffer);
+            } else if (buffer.grade == HG) {
+                supportList.add(buffer);
+            }
+        }
+
+        System.out.println("The Highest grade is a : " + HG);
+        System.out.println("By the students:");
+
+        for(int i = 0; i< supportList.size();i++) {
+            System.out.println(supportList.get(i).name);
+        }
+    }
+
+    public static void getLowestNote(Scanner sc, ArrayList<Student> studentList, ArrayList<Student> supportList, Student buffer) {
+        double LG = 100;
+        supportList.clear();
+
+        for(int i = 0; i< studentList.size();i++) {
+            buffer = studentList.get(i);
+            if(buffer.grade < LG) {
+                LG = buffer.grade;
+                supportList.clear();
+                supportList.add(buffer);
+            } else if (buffer.grade == LG) {
+                supportList.add(buffer);
+            }
+        }
+
+        System.out.println("The Lowest grade is a : " + LG);
+        System.out.println("By the students:");
+
+        for(int i = 0; i< supportList.size();i++) {
+            System.out.println(supportList.get(i).name);
+        }
+    }
+
+    public static void getClassAverage(Scanner sc, ArrayList<Student> studentList) {
+        double average = 0;
+
+        for(int i = 0; i <  studentList.size(); i++) {
+            average = average + studentList.get(i).grade;
+        }
+
+        average = average / studentList.size();
+        System.out.print("Average class grade: ");
+        System.out.println(average);
+    }
+
 }
