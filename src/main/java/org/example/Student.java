@@ -7,6 +7,8 @@ public class Student {
     ArrayList<Double> gradesAL = new ArrayList<>();
     String comment;
 
+    public Student() {}
+
     public Student(String name, ArrayList<Double> grades,  String comment) {
         this.name = name;
         this.gradesAL = grades;

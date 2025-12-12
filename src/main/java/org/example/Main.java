@@ -1,5 +1,6 @@
 package org.example;
 
+import javax.lang.model.type.ArrayType;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -84,11 +85,13 @@ public class Main {
         System.out.println("Introduce student name: ");
         String name = sc.nextLine();
         System.out.println("Introduce student grade (X.X): ");
-        double grade = sc.nextDouble();
+        Double grade = sc.nextDouble();
+        ArrayList<Double> grades = new ArrayList<>();
+        grades.add(grade);
         sc.nextLine();
         System.out.println("Introduce initial comment: ");
         String comment = sc.nextLine();
-        studentList.add(new Student(name, grade, comment));
+        studentList.add(new Student(name, grades, comment));
 
         System.out.println("Student has been added successfully!");
     }
@@ -116,102 +119,79 @@ public class Main {
     }
 
     public static void getHighestNote(Scanner sc, ArrayList<Student> studentList, ArrayList<Student> supportList, Student buffer) {
-        double HG = 0;
-        supportList.clear();
+        double highestGrade = -1.0;
+        Student curStudent = null;
 
-        for(int i = 0; i< studentList.size();i++) {
-            buffer = studentList.get(i);
-            if(buffer.grade > HG) {
-                HG = buffer.grade;
-                supportList.clear();
-                supportList.add(buffer);
-            } else if (buffer.grade == HG) {
-                supportList.add(buffer);
+        for (int i = 0; i< studentList.size();i++) {
+            curStudent = studentList.get(i);
+            if (curStudent.highestGrade() > highestGrade) {
+                highestGrade = curStudent.highestGrade();
             }
         }
 
-        System.out.println("The Highest grade is a : " + HG);
-        System.out.println("By the students:");
-
-        for(int i = 0; i< supportList.size();i++) {
-            System.out.println(supportList.get(i).name);
-        }
+        System.out.println("The Highest grade is a : " + highestGrade);
     }
 
     public static void getLowestNote(Scanner sc, ArrayList<Student> studentList, ArrayList<Student> supportList, Student buffer) {
-        double LG = 100;
-        supportList.clear();
+        double lowestGrade = 1000000000000.0;
+        Student curStudent = null;
 
-        for(int i = 0; i< studentList.size();i++) {
-            buffer = studentList.get(i);
-            if(buffer.grade < LG) {
-                LG = buffer.grade;
-                supportList.clear();
-                supportList.add(buffer);
-            } else if (buffer.grade == LG) {
-                supportList.add(buffer);
+        for (int i = 0; i< studentList.size();i++) {
+            curStudent = studentList.get(i);
+            if (curStudent.lowestGrade() < lowestGrade) {
+                lowestGrade = curStudent.lowestGrade();
             }
         }
 
-        System.out.println("The Lowest grade is a : " + LG);
-        System.out.println("By the students:");
 
-        for(int i = 0; i< supportList.size();i++) {
-            System.out.println(supportList.get(i).name);
-        }
+        System.out.println("The Lowest grade is a : " + lowestGrade);
     }
 
     public static void getClassAverage(Scanner sc, ArrayList<Student> studentList) {
-        double average = 0;
+        if (!(studentList.isEmpty())) {
+            System.out.print("Average class grade: ");
+            double average = 0.0;
+            Student curStudent = null;
+            for (int i = 0; i< studentList.size();i++) {
+                average = average + studentList.get(i).average();
+            }
+            average = average / studentList.size();
 
-        for(int i = 0; i <  studentList.size(); i++) {
-            average = average + studentList.get(i).grade;
+            System.out.println("The average class grade is a : " + average);
         }
-
-        average = average / studentList.size();
-        System.out.print("Average class grade: ");
-        System.out.println(average);
     }
 
     public static void getReport(ArrayList<Student> studentList) {
-        double HG = 0;
-        double LG = 100;
-        double gradeSum = 0;
-
-        ArrayList<String> highest = new ArrayList<>();
-        ArrayList<String> lowest = new ArrayList<>();
+        double highestGrade = -1.0;
+        double lowestGrade = 1000000000000.0;
+        double average = 0.0;
         Student curStudent = null;
 
-        for(int i = 0; i< studentList.size();i++) {
+        for (int i = 0; i< studentList.size();i++) {
             curStudent = studentList.get(i);
-            gradeSum += curStudent.grade;
-
-            if (curStudent.grade > HG) {
-                HG = curStudent.grade;
-                highest.clear();
-                highest.add(curStudent.name);
-            } else if (curStudent.grade == HG) {
-                highest.add(curStudent.name);
-            }
-
-            if  (curStudent.grade < LG) {
-                LG = curStudent.grade;
-                lowest.clear();
-                lowest.add(curStudent.name);
-            } else if (curStudent.grade == LG) {
-                lowest.add(curStudent.name);
+            if (curStudent.highestGrade() > highestGrade) {
+                highestGrade = curStudent.highestGrade();
             }
         }
 
-        double averageGrade = gradeSum / studentList.size();
+        for (int i = 0; i< studentList.size();i++) {
+            curStudent = studentList.get(i);
+            if (curStudent.lowestGrade() < lowestGrade) {
+                lowestGrade = curStudent.lowestGrade();
+            }
+        }
+
+        for (int i = 0; i< studentList.size();i++) {
+            average = average + studentList.get(i).average();
+        }
+
+        average = average / studentList.size();
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("---Report---\n").append("Highest grade in the class is: ").append(HG).append("\n");
-        sb.append("Students with the highest grade are: ").append(highest).append("\n");
-        sb.append("Lowest grade in the class is: ").append(LG).append("\n");
-        sb.append("Students with the lowest grade are: ").append(lowest).append("\n");
-        sb.append("Average grade is a : ").append(String.format("%.4f", averageGrade)).append("\n");
+        sb.append("---Report---\n").append("Highest grade in the class is: ").append(highestGrade).append("\n");
+        sb.append("Lowest grade in the class is: ").append(lowestGrade).append("\n");
+        sb.append("Average grade is a : ").append(String.format("%.4f", average)).append("\n");
 
         System.out.println(sb);
 
