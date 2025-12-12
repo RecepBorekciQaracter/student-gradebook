@@ -24,6 +24,7 @@ public class Main {
             System.out.println("6. Get Class Average");
             System.out.println("7. Get Report");
             System.out.println("8. Exit");
+            System.out.println("9. Add Student grade");
 
             int choice = readInt(sc, "\nPlease enter your choice: ");
 
@@ -57,6 +58,22 @@ public class Main {
                     break;
                 case 8:
                     System.out.println("Exiting...");
+                    return;
+                case 9:
+                    System.out.println("Please select student:");
+                    for(int i = 0; i<studentList.size(); i++) {
+                        System.out.println("1. " + studentList.get(i).name);
+                    }
+                    System.out.println("Introduce student number: ");
+                    int a = sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.println("Introduce grade X.X: ");
+                    double grade = sc.nextDouble();
+                    sc.nextLine();
+
+                    studentList.get(a).gradesAL.add(grade);
+
                     return;
                 default:
                     System.out.println("Invalid option.\n");
