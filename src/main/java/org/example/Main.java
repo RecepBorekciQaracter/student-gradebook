@@ -25,6 +25,7 @@ public class Main {
             System.out.println("7. Get Report");
             System.out.println("8. Exit");
             System.out.println("9. Add Student grade");
+            System.out.println("10. Add Student comment");
 
             int choice = readInt(sc, "\nPlease enter your choice: ");
 
@@ -73,6 +74,27 @@ public class Main {
                     sc.nextLine();
 
                     studentList.get(a).gradesAL.add(grade);
+
+                    return;
+
+                case 10:
+                    System.out.println("Please select student:");
+                    for(int i = 0; i<studentList.size(); i++) {
+                        System.out.println("1. " + studentList.get(i).name);
+                    }
+                    System.out.println("Introduce student number: ");
+                    int b = sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.println("Introduce comment to add: ");
+                    String coment = sc.nextLine();
+                    sc.nextLine();
+
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.append(studentList.get(b).comment).append(coment);
+
+                    studentList.get(b).comment = sb.toString();
 
                     return;
                 default:
