@@ -18,15 +18,15 @@ public class Main {
             System.out.println("Welcome to the Student Gradebook app! Please select an option: ");
 
             System.out.println("1. Add Student");
-            System.out.println("2. View Students");
-            System.out.println("3. Delete Student");
-            System.out.println("4. Get Highest Note");
-            System.out.println("5. Get Lowest Note");
-            System.out.println("6. Get Class Average");
-            System.out.println("7. Get Report");
-            System.out.println("8. Exit");
-            System.out.println("9. Add Student grade");
-            System.out.println("10. Add Student comment");
+            System.out.println("2. Add Student grade");
+            System.out.println("3. Add Student comment");
+            System.out.println("4. View Students");
+            System.out.println("5. Delete Student");
+            System.out.println("6. Get Highest Note");
+            System.out.println("7. Get Lowest Note");
+            System.out.println("8. Get Class Average");
+            System.out.println("9. Get Report");
+            System.out.println("10. Exit");
 
             int choice = readInt(sc, "\nPlease enter your choice: ");
 
@@ -35,36 +35,9 @@ public class Main {
                     addStudent(sc, studentList);
                     break;
                 case 2:
-                    // View Students
-                    viewStudents(studentList);
-                    break;
-                case 3:
-                    // Delete Student
-                    deleteStudent(sc, studentList);
-                    break;
-                case 4:
-                    // Display the highest note. And get the students with the highest note.
-                    getHighestNote(sc, studentList, supportList, buffer);
-                    break;
-                case 5:
-                    // Display the lowest note. And get the students with the lowest note.
-                    getLowestNote(sc, studentList, supportList, buffer);
-                    break;
-                case 6:
-                    // Get class average
-                    getClassAverage(sc, studentList);
-                    break;
-                case 7:
-                    // Get Report (Print highest note, lowest note, and average of the class using string builder)
-                    getReport(studentList);
-                    break;
-                case 8:
-                    System.out.println("Exiting...");
-                    return;
-                case 9:
                     System.out.println("Please select student:");
                     for(int i = 0; i<studentList.size(); i++) {
-                        System.out.println("1. " + studentList.get(i).name);
+                        System.out.println(i + " " + studentList.get(i).name);
                     }
                     System.out.println("Introduce student number: ");
                     int a = sc.nextInt();
@@ -76,12 +49,12 @@ public class Main {
 
                     studentList.get(a).gradesAL.add(grade);
 
-                    return;
+                    break;
 
-                case 10:
+                case 3:
                     System.out.println("Please select student:");
                     for(int i = 0; i<studentList.size(); i++) {
-                        System.out.println("1. " + studentList.get(i).name);
+                        System.out.println(i + " " + studentList.get(i).name);
                     }
                     System.out.println("Introduce student number: ");
                     int b = sc.nextInt();
@@ -89,14 +62,40 @@ public class Main {
 
                     System.out.println("Introduce comment to add: ");
                     String coment = sc.nextLine();
-                    sc.nextLine();
 
                     StringBuilder sb = new StringBuilder();
 
-                    sb.append(studentList.get(b).comment).append(coment);
+                    sb.append(studentList.get(b).comment).append(", ").append(coment);
 
                     studentList.get(b).comment = sb.toString();
 
+                    break;
+                case 4:
+                    // View Students
+                    viewStudents(studentList);
+                    break;
+                case 5:
+                    // Delete Student
+                    deleteStudent(sc, studentList);
+                    break;
+                case 6:
+                    // Display the highest note. And get the students with the highest note.
+                    getHighestNote(sc, studentList, supportList, buffer);
+                    break;
+                case 7:
+                    // Display the lowest note. And get the students with the lowest note.
+                    getLowestNote(sc, studentList, supportList, buffer);
+                    break;
+                case 8:
+                    // Get class average
+                    getClassAverage(sc, studentList);
+                    break;
+                case 9:
+                    // Get Report (Print highest note, lowest note, and average of the class using string builder)
+                    getReport(studentList);
+                    break;
+                case 10:
+                    System.out.println("Exiting...");
                     return;
                 default:
                     System.out.println("Invalid option.\n");
