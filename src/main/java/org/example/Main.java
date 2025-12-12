@@ -53,6 +53,7 @@ public class Main {
                     break;
                 case 7:
                     // Get Report (Print highest note, lowest note, and average of the class using string builder)
+                    getReport(studentList);
                     break;
                 case 8:
                     System.out.println("Exiting...");
@@ -170,6 +171,50 @@ public class Main {
         average = average / studentList.size();
         System.out.print("Average class grade: ");
         System.out.println(average);
+    }
+
+    public static void getReport(ArrayList<Student> studentList) {
+        double HG = 0;
+        double LG = 100;
+        double gradeSum = 0;
+
+        ArrayList<String> highest = new ArrayList<>();
+        ArrayList<String> lowest = new ArrayList<>();
+        Student curStudent = null;
+
+        for(int i = 0; i< studentList.size();i++) {
+            curStudent = studentList.get(i);
+            gradeSum += curStudent.grade;
+
+            if (curStudent.grade > HG) {
+                HG = curStudent.grade;
+                highest.clear();
+                highest.add(curStudent.name);
+            } else if (curStudent.grade == HG) {
+                highest.add(curStudent.name);
+            }
+
+            if  (curStudent.grade < LG) {
+                LG = curStudent.grade;
+                lowest.clear();
+                lowest.add(curStudent.name);
+            } else if (curStudent.grade == LG) {
+                lowest.add(curStudent.name);
+            }
+        }
+
+        double averageGrade = gradeSum / studentList.size();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("---Report---\n").append("Highest grade in the class is: ").append(HG).append("\n");
+        sb.append("Students with the highest grade are: ").append(highest).append("\n");
+        sb.append("Lowest grade in the class is: ").append(LG).append("\n");
+        sb.append("Students with the lowest grade are: ").append(lowest).append("\n");
+        sb.append("Average grade is a : ").append(String.format("%.4f", averageGrade)).append("\n");
+
+        System.out.println(sb);
+
     }
 
 }
